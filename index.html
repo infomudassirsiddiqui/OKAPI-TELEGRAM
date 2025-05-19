@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Okapi Mining Bot - Efficient crypto mining with AI, NFTs, and referrals">
+    <meta name="theme-color" content="#FFD700">
+    <title>Okapi Mining Bot</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="/logo.png" alt="Okapi Logo" class="sidebar-logo">
+                <h2>Okapi Mining</h2>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">☰</button>
+            <ul class="sidebar-menu">
+                <li><a href="#home" class="tab-link active" data-tab="home"><span class="nav-icon">🏠</span> Home</a></li>
+                <li><a href="#mine" class="tab-link" data-tab="mine"><span class="nav-icon">⛏️</span> Mine</a></li>
+                <li><a href="#tasks" class="tab-link" data-tab="tasks"><span class="nav-icon">✅</span> Tasks</a></li>
+                <li><a href="#wallet" class="tab-link" data-tab="wallet"><span class="nav-icon">💰</span> Wallet</a></li>
+                <li><a href="#social" class="tab-link" data-tab="social"><span class="nav-icon">👥</span> Social</a></li>
+                <li><a href="#quests" class="tab-link" data-tab="quests"><span class="nav-icon">🏆</span> Quests</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Tab -->
+            <section id="home" class="tab-content active">
+                <div class="dashboard">
+                    <div class="widget balance-widget">
+                        <h3>Balance</h3>
+                        <p><span id="tokenBalance">0.00</span> OKP</p>
+                        <p class="okapi-icon">🦒</p>
+                    </div>
+                    <div class="widget stats-widget">
+                        <h3>Mining Stats</h3>
+                        <p>Hash Rate: <span id="hashRate">0</span> H/s</p>
+                        <p>Total Mined: <span id="totalMined">0.00</span> OKP</p>
+                    </div>
+                    <div class="widget ai-widget">
+                        <h3>AI Optimization</h3>
+                        <p id="aiSuggestion">Click to optimize mining</p>
+                        <button id="optimizeButton">Optimize Now</button>
+                    </div>
+                    <div class="widget market-widget">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mine Tab -->
+            <section id="mine" class="tab-content">
+                <div class="mine-section">
+                    <img src="/logo.png" alt="Okapi Mine" class="section-logo">
+                    <h2>Tap to Mine OKP</h2>
+                    <p class="instructions">Click below to start a 24-hour mining session. Eco-Mining saves energy!</p>
+                    <button id="mineButton" class="mine-button tap-animate" title="Start 24-hour mining session"><span>Tap to Mine</span></button>
+                    <p id="sessionTimer" class="timer">Session: Not started</p>
+                    <button id="voiceControl" class="voice-button">🎙️ Voice Control</button>
+                    <div class="progress-ring">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="progress-ring-circle" cx="50" cy="50" r="28" />
+                        </svg>
+                    </div>
+                    <label><input type="checkbox" id="ecoMining"> Eco-Mining Mode</label>
+                </div>
+            </section>
+
+            <!-- Tasks Tab -->
+            <section id="tasks" class="tab-content">
+                <div class="card">
+                    <h2>Tasks</h2>
+                    <div class="task-item">
+                        <button id="checkinButton">Daily Check-In (+0.5 OKP)</button>
+                        <span id="checkinStatus" class="task-status"></span>
+                    </div>
+                    <div class="task-item">
+                        <button id="referButton">Refer a Friend (+1.0 OKP)</button>
+                        <span id="referStatus" class="task-status"></span>
+                    </div>
+                    <div class="task-item">
+                        <button id="communityButton">Join Community (+0.8 OKP)</button>
+                        <span id="communityStatus" class="task-status"></span>
+                    </div>
+                    <div class="task-item">
+                        <button id="followXButton">Follow @OkapiToken on X (+0.7 OKP)</button>
+                        <span id="followXStatus" class="task-status"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wallet Tab -->
+            <section id="wallet" class="tab-content">
+                <div class="card">
+                    <h2>Wallet</h2>
+                    <p>Wallet: <span id="walletAddress">Disconnected</span></p>
+                    <button id="connectWallet">Connect Wallet</button>
+                    <p>Stake Balance: <span id="stakeBalance">0.00</span> OKP</p>
+                    <input type="number" id="stakeAmount" min="0" step="0.1" placeholder="Amount to stake">
+                    <button id="stakeButton">Stake</button>
+                </div>
+            </section>
+
+            <!-- Social Tab -->
+            <section id="social" class="tab-content">
+                <div class="card">
+                    <h2>Social Mining Pools</h2>
+                    <button id="createPool">Create Pool</button>
+                    <button id="joinPool">Join Pool</button>
+                    <p>Referral Link: <input type="text" id="referralLink" readonly></p>
+                    <div class="share-buttons">
+                        <button id="shareX">Share on X</button>
+                        <button id="shareTelegram">Share on Telegram</button>
+                    </div>
+                    <p>Referrals: <span id="referralCount">0</span> | Commission: <span id="referralCommission">0.00</span> OKP</p>
+                </div>
+            </section>
+
+            <!-- Quests Tab -->
+            <section id="quests" class="tab-content">
+                <div class="card">
+                    <h2>Quests & NFTs</h2>
+                    <div id="questList">
+                        <p>Mine 10 OKP to unlock Okapi Legend NFT</p>
+                    </div>
+                    <button id="mintNFT">Mint NFT Reward</button>
+                    <div id="nftPreview" class="nft-preview">
+                        <img src="/logo.png" alt="NFT Preview">
+                        <p>Okapi Legend NFT</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Card -->
+            <div class="card settings-card">
+                <h2>Settings</h2>
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="zh">中文</option>
+                </select>
+                <select id="themeSelect">
+                    <option value="okapi">Okapi Theme</option>
+                    <option value="dark">Dark</option>
+                    <option value="minimal">Minimal</option>
+                </select>
+                <label><input type="checkbox" id="notificationsToggle" checked> Notifications</label>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast">
+                <span class="toast-icon">🦒</span>
+                <span class="toast-message"></span>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="usernameModal" class="modal">
+        <input type="text" id="usernameInput" placeholder="Enter username">
+        <button id="saveUsername">Save</button>
+    </div>
+    <div id="achievementModal" class="modal">
+        <p id="achievementMessage"></p>
+        <button id="closeAchievement">Close</button>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
